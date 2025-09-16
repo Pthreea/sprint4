@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Task {
     private static int idCounter = 0;
     private final String id;
-    final private String name;
-    private Status status;
+    private String name;
     private String description;
+    private Status status;
 
-    public Task(String name,String description) {
+    public Task(String name, String description, Status aNew) {
         this.id = generateId();
         this.name = name;
-        this.status = Status.NEW;
         this.description = description;
+        this.status = Status.NEW;
     }
 
     private static String generateId() {
@@ -28,11 +28,11 @@ public class Task {
         return name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -50,10 +50,12 @@ public class Task {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Task task = (Task) object;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Task task = (Task) obj;
         return Objects.equals(id, task.id);
     }
 }
+
 

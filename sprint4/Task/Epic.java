@@ -1,56 +1,45 @@
 package sprint4.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Epic extends Task {
-    final private ArrayList<String> subtaskIds;
+    private List<String> subtaskIds;
 
-    public Epic(String name, String description){
-        super(name,description);
+    public Epic(String name, String description) {
+        super(name, description, Status.NEW);
         this.subtaskIds = new ArrayList<>();
     }
 
-    public void addSubtaskId(String subtaskId){
+    public void addSubtaskId(String subtaskId) {
         subtaskIds.add(subtaskId);
     }
 
-    public ArrayList<String> getSubtaskIds(){
+    public List<String> getSubtaskIds() {
         return subtaskIds;
     }
 
-    public void clearSubtaskIds(){
+    public void clearSubtaskIds() {
         subtaskIds.clear();
     }
 
-    public void updateStatus(HashMap<String, Subtask > allSubtasks){
+    public void updateStatus(Map<String, Subtask> allSubtasks) {
         boolean allDone = true;
-        boolean anyProgress = false;
+        boolean anyInProgress = false;
 
-        for (String subtaskId : subtaskIds){
+        for (String subtaskId : subtaskIds) {
             Subtask subtask = allSubtasks.get(subtaskId);
-            if(subtask != null){
-                if(subtask.getStatus() != Status.DONE){
+            if (subtask != null) {
+                if (subtask.getStatus() != Status.DONE) {
                     allDone = false;
                 }
-                if(subtask.getStatus() == Status.IN_PROGRESS){
-                    anyProgress = true;
+                if (subtask.getStatus() == Status.IN_PROGRESS) {
+                    anyInProgress = true;
                 }
             }
         }
 
-        if(allDone){
-            setStatus(Status.DONE);
-        }else if(anyProgress){
-            setStatus(Status.IN_PROGRESS);
-        }else {
-            setStatus(Status.NEW);
-        }
+        setStatus(allDone ? Status.DONE : (anyInProgress ? Status.IN_PROGRESS : Status.NEW));
     }
-
-    @Override
-    public void setStatus(Status status){
-        super.setStatus(status);
-    }
-
 }
